@@ -13,7 +13,6 @@ GitHub Pages publishes within a minute.
 | `index.html` | Home: bio, research interests, news, contact |
 | `publications.html` | Full publication list with a client-side filter |
 | `activities.html` | Editorial roles, conference organisation, memberships |
-| `cv.html` | Education, appointments, awards |
 | `404.html` | Not-found page |
 | `assets/css/style.css` | All styling; colours live in the `:root` block |
 | `assets/js/main.js` | Mobile nav and publication filter (progressive enhancement) |
@@ -27,7 +26,7 @@ GitHub Pages publishes within a minute.
 Most edits are direct HTML edits — open the file and change the text.
 
 - **News**: edit the `<section id="news">` list in `index.html`.
-- **Activities / CV**: edit the `<ul class="cv-list">` blocks.
+- **Activities**: edit the `<ul class="cv-list">` blocks.
 - **Colours and fonts**: edit the custom properties at the top of `assets/css/style.css`.
   Dark mode follows the visitor's system setting automatically.
 
@@ -54,8 +53,24 @@ Then open <http://localhost:8000>.
 
 ## Publication data provenance
 
-The 154 entries were imported from the teachPress-backed list on the previous
-homepage at `cvl.ist.osaka-u.ac.jp`, filtered to entries with Matsushita as an
-author. One source record with a swapped title and venue was corrected against
-DOI `10.1145/3641519.3657473`. Papers published before 2004 are not in that
-source and are not yet listed here.
+The 207 entries in `tools/publications.json` come from three sources:
+
+1. **DBLP** (primary) — 200 records covering 2000&ndash;2026. Conference papers,
+   journal articles, the book, and reference-work entries are all included.
+   arXiv/CoRR preprints are included only when no published version exists;
+   preprints duplicating a published paper are dropped.
+2. **Japanese-language papers** — 13 MIRU (画像の認識・理解シンポジウム) entries
+   matched on the author string 松下康之 from the previous homepage's
+   teachPress list, which DBLP does not index.
+3. **Previous homepage** — 8 remaining entries DBLP does not carry (domestic
+   Japanese conferences, a Microsoft technical report, an ICIP tutorial), plus
+   the hosted paper PDFs linked throughout the list.
+
+DOIs and open-access PDF links were added by matching titles against OpenAlex
+author `A5033986386` (verified via ORCID `0000-0002-1935-4752`).
+
+Proceedings that Matsushita edited are deliberately excluded from the
+publication list; those roles appear on `activities.html` instead.
+
+Entries are deduplicated on title **and** year, because a conference paper and
+its later journal extension share a title but are distinct publications.

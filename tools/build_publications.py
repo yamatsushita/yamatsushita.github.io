@@ -18,7 +18,8 @@ DATA = os.path.join(ROOT, "tools", "publications.json")
 OUT_HTML = os.path.join(ROOT, "publications.html")
 OUT_BIB = os.path.join(ROOT, "assets", "publications.bib")
 
-# Long venue strings -> short badge shown next to each entry.
+# Venue strings -> short badge. Patterns cover both full names and the
+# abbreviated forms DBLP uses (e.g. "IEEE Trans. Pattern Anal. Mach. Intell.").
 VENUE_BADGES = [
     (r"Computer Vision and Pattern Recognition|\bCVPR\b", "CVPR"),
     (r"International Conference on Computer Vision\b|\bICCV\b", "ICCV"),
@@ -29,22 +30,29 @@ VENUE_BADGES = [
     (r"Neural Information Processing Systems|NeurIPS|\bNIPS\b", "NeurIPS"),
     (r"International Conference on Machine Learning\b|\bICML\b", "ICML"),
     (r"Learning Representations|\bICLR\b", "ICLR"),
-    (r"Pattern Analysis and Machine Intelligence|\bPAMI\b", "TPAMI"),
-    (r"International Journal of Computer Vision|\bIJCV\b", "IJCV"),
-    (r"Transactions on Image Processing", "TIP"),
+    (r"Pattern Anal\.? Mach\.? Intell|Pattern Analysis and Machine Intelligence|\bPAMI\b", "TPAMI"),
+    (r"Int\.? J\.? Comput\.? Vis|International Journal of Computer Vision|\bIJCV\b", "IJCV"),
+    (r"Trans\.? Image Process|Transactions on Image Processing", "TIP"),
     (r"SIGGRAPH", "SIGGRAPH"),
-    (r"3D Vision|\b3DV\b", "3DV"),
+    (r"\b3DV\b|3D Vision|3DIMPVT", "3DV"),
     (r"Computational Photography|\bICCP\b", "ICCP"),
     (r"International Conference on Image Processing|\bICIP\b", "ICIP"),
     (r"International Conference on Pattern Recognition|\bICPR\b", "ICPR"),
     (r"Robotics and Automation|\bICRA\b", "ICRA"),
     (r"Intelligent Robots and Systems|\bIROS\b", "IROS"),
-    (r"Computer Vision and Image Understanding", "CVIU"),
-    (r"Machine Vision and Applications", "MVA"),
-    (r"The Visual Computer", "TVC"),
-    (r"^Pattern Recognition$", "PR"),
-    (r"arXiv", "arXiv"),
+    (r"Comput\.? Vis\.? Image Underst|Computer Vision and Image Understanding", "CVIU"),
+    (r"Mach\.? Vis\.? Appl|Machine Vision and Applications|\bMVA\b", "MVA"),
+    (r"Vis\.? Comput|The Visual Computer", "TVC"),
+    (r"IPSJ Trans\.? Comput\.? Vis\.? Appl", "IPSJ CVA"),
+    (r"Pattern Recognit|^Pattern Recognition$", "PR"),
+    (r"画像の認識・理解シンポジウム|\bMIRU\b", "MIRU"),
+    (r"人工知能学会", "JSAI"),
+    (r"Pacific Graphics|\bPG\b", "PG"),
+    (r"arXiv|CoRR", "arXiv"),
 ]
+
+# Within a year: journals first, then conferences, then preprints.
+TYPE_RANK = {"article": 0, "inproceedings": 1, "conference": 1, "misc": 2}
 
 
 def badge_for(venue):
@@ -104,10 +112,12 @@ def render(entries):
 
     chunks = []
     for year in sorted(by_year, key=lambda y: (y.isdigit(), y), reverse=True):
+        group = sorted(by_year[year],
+                       key=lambda e: (TYPE_RANK.get(e.get("_type"), 1), e.get("title", "").lower()))
         chunks.append('      <section class="year-group">')
         chunks.append("        <h2>%s</h2>" % html.escape(year))
         chunks.append('        <ul class="pub-list">')
-        for e in by_year[year]:
+        for e in group:
             chunks.append('          <li class="pub">')
             chunks.append('            <span class="pub-title">%s</span>' % html.escape(e.get("title", "")))
             chunks.append('            <span class="pub-authors">%s</span>' % format_authors(e.get("author", "")))
@@ -157,7 +167,6 @@ PAGE = """<!DOCTYPE html>
         <li><a href="index.html">Home</a></li>
         <li><a href="publications.html" aria-current="page">Publications</a></li>
         <li><a href="activities.html">Activities</a></li>
-        <li><a href="cv.html">CV</a></li>
       </ul>
     </nav>
   </div>
