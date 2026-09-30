@@ -193,7 +193,6 @@ PAGE = """<!DOCTYPE html>
 <footer class="site-footer">
   <div class="wrap">
     <span>&copy; 2026 Yasuyuki Matsushita</span>
-    <span><a href="https://github.com/yamatsushita/yamatsushita.github.io">Source on GitHub</a></span>
   </div>
 </footer>
 
