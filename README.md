@@ -12,9 +12,9 @@ GitHub Pages publishes within a minute.
 | --- | --- |
 | `index.html` | Home: bio, research interests, news, contact |
 | `publications.html` | Full publication list with a client-side filter |
-| `activities.html` | Editorial roles, conference organisation, memberships |
+| `activities.html` | Editorial roles, conference organization, area chairing |
 | `404.html` | Not-found page |
-| `assets/css/style.css` | All styling; colours live in the `:root` block |
+| `assets/css/style.css` | All styling; colors live in the `:root` block |
 | `assets/js/main.js` | Mobile nav and publication filter (progressive enhancement) |
 | `assets/img/profile.jpg` | Portrait |
 | `assets/publications.bib` | BibTeX export of the publication list |
@@ -27,7 +27,7 @@ Most edits are direct HTML edits — open the file and change the text.
 
 - **News**: edit the `<section id="news">` list in `index.html`.
 - **Activities**: edit the `<ul class="cv-list">` blocks.
-- **Colours and fonts**: edit the custom properties at the top of `assets/css/style.css`.
+- **Colors and fonts**: edit the custom properties at the top of `assets/css/style.css`.
   Dark mode follows the visitor's system setting automatically.
 
 ### Publications

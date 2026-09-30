@@ -63,7 +63,7 @@ def badge_for(venue):
 
 
 def format_authors(raw):
-    """'A and B and C' (or comma separated) -> HTML with my name emphasised."""
+    """'A and B and C' (or comma separated) -> HTML with my name emphasized."""
     if not raw:
         return ""
     parts = re.split(r"\s+and\s+", raw) if " and " in raw else raw.split(",")
@@ -145,7 +145,7 @@ def render(entries):
 
 
 PAGE = """<!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
