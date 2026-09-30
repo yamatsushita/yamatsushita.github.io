@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yamatsushita.github.io/sitemap.xml
